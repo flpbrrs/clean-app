@@ -14,9 +14,13 @@
   "description": "",
   "devDependencies": {
     "@types/jest": "^29.5.13",
+    "@types/uuid": "^10.0.0",
     "eslint-config": "*",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
     "typescript-config": "*"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0"
   }
 }
