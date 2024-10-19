@@ -17,6 +17,14 @@ export default class Validador {
         throw [{ codigo: erro } as ErroValidacao]
     }
 
+    static combine(...validadores: Validador[]): ErroValidacao[] | null {
+        const errosFiltrados = validadores
+            .flatMap(v => v.erros)
+            .filter(e => e !== null) as ErroValidacao[]
+
+        return errosFiltrados.length > 0 ? errosFiltrados : null
+    }
+
     lancarSeErro(): void | never {
         if (!this.erros.length) return;
         throw this.erros;
@@ -55,6 +63,12 @@ export default class Validador {
     }
 
     // Validadores
+    isNulo(erro: string = "NAO_NULO"): Validador {
+        return this.valor === null || this.valor === undefined
+            ? this
+            : this.adicionarErro(erro)
+    }
+
     isNaoNulo(erro: string = "NULO"): Validador {
         return this.valor !== null && this.valor !== undefined
             ? this
@@ -73,8 +87,71 @@ export default class Validador {
             : this.adicionarErro(erro);
     }
 
-    uuid(erro: string = "ID_INVÁLIDO"): Validador {
-        const validador = this.isNaoNulo(erro);
+    temTamanhoMenorQue(
+        tamanhoMaximo: number,
+        incluirLimites: boolean = false,
+        erro: string = "TAMANHO_INVÁLIDO",
+    ): Validador {
+        if (!this.valor) return this
+
+        const comparacaoValida = incluirLimites
+            ? this.valor.length <= tamanhoMaximo
+            : this.valor.length < tamanhoMaximo;
+
+        return comparacaoValida
+            ? this
+            : this.adicionarErro({ codigo: erro, max: tamanhoMaximo });
+    }
+
+    temTamanhoMaiorQue(
+        tamanhoMinimo: number,
+        incluirLimites: boolean = false,
+        erro: string = "TAMANHO_INVÁLIDO",
+    ): Validador {
+        if (!this.valor) return this
+
+        const comparacaoValida = incluirLimites
+            ? this.valor.length >= tamanhoMinimo
+            : this.valor.length > tamanhoMinimo;
+
+        return comparacaoValida
+            ? this
+            : this.adicionarErro({ codigo: erro, min: tamanhoMinimo });
+    }
+
+    temValorMenorQue(
+        maximo: number,
+        incluirLimites: boolean = false,
+        erro: string = "VALOR_ACIMA_DO_MAXIMO",
+    ): Validador {
+        if (!this.valor) return this
+
+        const comparacaoValida = incluirLimites
+            ? this.valor <= maximo
+            : this.valor < maximo;
+
+        return comparacaoValida
+            ? this
+            : this.adicionarErro({ codigo: erro, max: maximo });
+    }
+
+    temValorMaiorQue(
+        minimo: number,
+        incluirLimites: boolean = false,
+        erro: string = "VALOR_ABAIXO_DO_MINIMO",
+    ): Validador {
+        if (!this.valor) return this
+
+        const comparacaoValida = incluirLimites
+            ? this.valor >= minimo
+            : this.valor > minimo;
+
+        return comparacaoValida
+            ? this
+            : this.adicionarErro({ codigo: erro, min: minimo });
+    }
+
+    isUuid(erro: string = "ID_INVÁLIDO"): Validador {
         return validate(this.valor)
             ? this
             : this.adicionarErro(erro);
