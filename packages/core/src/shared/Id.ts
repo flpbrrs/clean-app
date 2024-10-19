@@ -7,7 +7,7 @@ export default class Id {
     constructor(valor?: string, atributo?: string, objeto?: string) {
         this.valor = valor ?? uuid();
 
-        Validador.validar(this.valor, atributo, objeto).uuid().lancarSeErro();
+        Validador.validar(this.valor, atributo, objeto).isUuid().lancarSeErro();
     }
 
     static get gerar(): Id {
