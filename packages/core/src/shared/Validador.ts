@@ -1,3 +1,4 @@
+import { validate } from "uuid";
 import ErroValidacao from "../error/ErroValidacao";
 
 export default class Validador {
@@ -69,6 +70,13 @@ export default class Validador {
         }
         return validador.valor?.trim() !== ""
             ? validador
+            : this.adicionarErro(erro);
+    }
+
+    uuid(erro: string = "ID_INVÁLIDO"): Validador {
+        const validador = this.isNaoNulo(erro);
+        return validate(this.valor)
+            ? this
             : this.adicionarErro(erro);
     }
 }
