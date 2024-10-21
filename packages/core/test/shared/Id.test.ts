@@ -8,7 +8,7 @@ describe('Id', () => {
     })
 
     test("Deve lançar um erro ao tentar criar um id inválido", () => {
-        Teste.comErro(() => new Id('123', 'valor', "ID"), { codigo: 'ID_INVÁLIDO' })
+        Teste.comErro(() => new Id('123', 'valor', "ID"), { codigo: 'ID_INVALIDO' })
     })
 
     test("Deve criar um id válido a partir de um id existente", () => {

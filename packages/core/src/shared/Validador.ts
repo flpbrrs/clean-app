@@ -90,7 +90,7 @@ export default class Validador {
     temTamanhoMenorQue(
         tamanhoMaximo: number,
         incluirLimites: boolean = false,
-        erro: string = "TAMANHO_INVÁLIDO",
+        erro: string = "TAMANHO_INVALIDO",
     ): Validador {
         if (!this.valor) return this
 
@@ -106,7 +106,7 @@ export default class Validador {
     temTamanhoMaiorQue(
         tamanhoMinimo: number,
         incluirLimites: boolean = false,
-        erro: string = "TAMANHO_INVÁLIDO",
+        erro: string = "TAMANHO_INVALIDO",
     ): Validador {
         if (!this.valor) return this
 
@@ -151,13 +151,13 @@ export default class Validador {
             : this.adicionarErro({ codigo: erro, min: minimo });
     }
 
-    isUuid(erro: string = "ID_INVÁLIDO"): Validador {
+    isUuid(erro: string = "ID_INVALIDO"): Validador {
         return validate(this.valor)
             ? this
             : this.adicionarErro(erro);
     }
 
-    isUrl(erro: string = "URL_INVÁLIDA"): Validador {
+    isUrl(erro: string = "URL_INVALIDA"): Validador {
         try {
             new URL(this.valor)
             return this
@@ -171,7 +171,7 @@ export default class Validador {
         return emailRegex.test(this.valor) ? this : this.adicionarErro(erro)
     }
 
-    isSenhaHash(erro: string = "HASH_INVÁLIDO"): Validador {
+    isSenhaHash(erro: string = "HASH_INVALIDO"): Validador {
         const hashRegex = /^\$2[ayb]\$[0-9]{2}\$[A-za-z0-9\.\/]{53}$/;
         return hashRegex.test(this.valor) ? this : this.adicionarErro(erro)
     }
