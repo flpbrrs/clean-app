@@ -166,8 +166,8 @@ export default class Validador {
         }
     }
 
-    isEmail(erro: string = "EMAIL_INVÁLIDO"): Validador {
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    isEmail(erro: string = "EMAIL_INVALIDO"): Validador {
+        const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/
         return emailRegex.test(this.valor) ? this : this.adicionarErro(erro)
     }
 
