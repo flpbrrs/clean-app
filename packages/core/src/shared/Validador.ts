@@ -156,4 +156,32 @@ export default class Validador {
             ? this
             : this.adicionarErro(erro);
     }
+
+    isUrl(erro: string = "URL_INVÁLIDA"): Validador {
+        try {
+            new URL(this.valor)
+            return this
+        } catch (e: any) {
+            return this.adicionarErro(erro)
+        }
+    }
+
+    isEmail(erro: string = "EMAIL_INVÁLIDO"): Validador {
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+        return emailRegex.test(this.valor) ? this : this.adicionarErro(erro)
+    }
+
+    isSenhaHash(erro: string = "HASH_INVÁLIDO"): Validador {
+        const hashRegex = /^\$2[ayb]\$[0-9]{2}\$[A-za-z0-9\.\/]{53}$/;
+        return hashRegex.test(this.valor) ? this : this.adicionarErro(erro)
+    }
+
+    isSenhaForte(erro: string = "SENHA_FRACA"): Validador {
+        const senhaRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
+        return senhaRegex.test(this.valor) ? this : this.adicionarErro(erro)
+    }
+
+    isRegex(regex: RegExp, erro: string): Validador {
+        return regex.test(this.valor) ? this : this.adicionarErro(erro)
+    }
 }
