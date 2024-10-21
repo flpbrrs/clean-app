@@ -1,7 +1,5 @@
-import ErroValidacao from "../../src/error/ErroValidacao";
 import Id from "../../src/shared/Id";
 import Validador from "../../src/shared/Validador";
-import Teste from "../utils/Teste";
 
 describe('Validador', () => {
     test("Deve retornar válido com texto não nulo", () => {
