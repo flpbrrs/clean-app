@@ -1,5 +1,7 @@
 import ErroValidacao from "../../src/error/ErroValidacao";
+import Id from "../../src/shared/Id";
 import Validador from "../../src/shared/Validador";
+import Teste from "../utils/Teste";
 
 describe('Validador', () => {
     test("Deve retornar válido com texto não nulo", () => {
@@ -158,6 +160,66 @@ describe('Validador', () => {
 
     test("Deve ignorar erros repetidos", () => {
         const v = Validador.validar(null).isNaoNulo().isNaoNulo()
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar Uuid', () => {
+        const v = Validador.validar(Id.gerar.valor).isUuid();
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve retornar erro para Uuid inválido', () => {
+        const v = Validador.validar('234').isUuid();
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar um URL', () => {
+        const v = Validador.validar('https://google.com').isUrl();
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve retornar erro para uma url inválida', () => {
+        const v = Validador.validar('google').isUrl()
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar um email', () => {
+        const v = Validador.validar('felipebarros.engh@gmail.com').isEmail()
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve retornar erro para um email inválido', () => {
+        const v = Validador.validar('felipebarros').isEmail()
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar um hash', () => {
+        const v = Validador.validar('$2a$12$dEkts23vCqtQ68zxCJn14.G.ByPoDfuGN.b.2Krx8ULCPTTros6Oi').isSenhaHash()
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve gerar erro com hash inválido', () => {
+        const v = Validador.validar('felipebarros').isSenhaHash()
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar uma senha forte', () => {
+        const v = Validador.validar('S3nh4@Fort3').isSenhaForte()
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve gerar erro para uma senha fraca', () => {
+        const v = Validador.validar('senhafraca').isSenhaForte()
+        expect(v.erros.length).toBe(1)
+    })
+
+    test('Deve validar corretamente um regex', () => {
+        const v = Validador.validar('12345678900').isRegex(/\d{11}/, "erro")
+        expect(v.erros.length).toBe(0)
+    })
+
+    test('Deve gerar erros para regex inválido', () => {
+        const v = Validador.validar('1234567a900').isRegex(/\d{11}/, "erro")
         expect(v.erros.length).toBe(1)
     })
 });
