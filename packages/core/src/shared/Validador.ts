@@ -177,7 +177,7 @@ export default class Validador {
     }
 
     isSenhaForte(erro: string = "SENHA_FRACA"): Validador {
-        const senhaRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/;
+        const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
         return senhaRegex.test(this.valor) ? this : this.adicionarErro(erro)
     }
 
