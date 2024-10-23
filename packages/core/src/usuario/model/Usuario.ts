@@ -7,7 +7,7 @@ export interface UsuarioProps extends EntidadeProps {
     nome?: string,
     email?: string,
     senha?: string,
-    isAdmin: boolean
+    isAdmin?: boolean
 }
 
 export default class Usuario extends Entidade<Usuario, UsuarioProps> {
