@@ -10,7 +10,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^5.21.1",
     "core": "*",
+    "prisma": "^5.21.1",
     "tsx": "^4.19.1"
   },
   "devDependencies": {
