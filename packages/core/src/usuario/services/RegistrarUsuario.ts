@@ -26,7 +26,7 @@ export default class RegistrarUsuario implements CasoDeUso<RegistrarUsuarioEntra
         const usuario = new Usuario({ nome, email, senha: senhaCripto })
 
         const usuarioExiste = await this.repo.findByEmail(email)
-        Validador.validar(usuarioExiste).isNulo("USUARIO_JA_EXISTE").lancarSeErro()
+        Validador.validar(usuarioExiste?.email.valor, 'Email', "Usuário").isNulo("USUARIO_JA_EXISTE").lancarSeErro()
 
         await this.repo.save(usuario)
     }
