@@ -1,3 +1,3 @@
-import { sum } from "core";
+import MenuPrincipal from "./external/ui/menu/menuPrincipal";
 
-console.log(sum(2, 2))
+MenuPrincipal()
