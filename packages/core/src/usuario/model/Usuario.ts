@@ -24,4 +24,8 @@ export default class Usuario extends Entidade<Usuario, UsuarioProps> {
         this.senha = props.senha ? new SenhaHash(props.senha) : null
         this.isAdmin = props.isAdmin ?? false;
     }
+
+    semSenha(): Usuario {
+        return this.clone({ senha: undefined })
+    }
 }
