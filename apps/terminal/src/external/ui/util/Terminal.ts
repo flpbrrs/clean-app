@@ -34,4 +34,8 @@ export default class Terminal {
     static error(texto: string, novaLinha = true) {
         terminal.red(`${novaLinha ? '\n' : ''}${texto}`)
     }
+
+    static info(texto: string, novaLinha = true) {
+        terminal.cyan(`${novaLinha ? '\n' : ''}${texto}`)
+    }
 }
