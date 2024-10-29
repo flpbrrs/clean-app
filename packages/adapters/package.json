@@ -1,0 +1,20 @@
+{
+  "name": "adapters",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint-config": "*",
+    "typescript-config": "*"
+  },
+  "dependencies": {
+    "core": "*"
+  }
+}
