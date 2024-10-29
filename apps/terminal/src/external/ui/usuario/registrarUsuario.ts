@@ -1,4 +1,4 @@
-import { RegistrarUsuario } from "core";
+import { UsuarioFacade } from "adapters";
 import ProvedorCriptografiaBcrypt from "../../auth/ProvedorCriptografiaBcrypt";
 import RepositorioUsuarioPrisma from "../../db/RepositorioUSuarioPrisma";
 import Terminal from "../util/Terminal";
@@ -15,9 +15,9 @@ export default async function registrarUsuario() {
     const crypto = new ProvedorCriptografiaBcrypt();
 
     try {
-        const registrarUsuario = new RegistrarUsuario(userRepo, crypto);
+        const facade = new UsuarioFacade(userRepo, crypto);
 
-        await registrarUsuario.executar({
+        await facade.registrar({
             nome,
             email,
             senha

@@ -1,4 +1,4 @@
-import { LoginUsuario, RegistrarUsuario } from "core";
+import { UsuarioFacade } from 'adapters'
 import ProvedorCriptografiaBcrypt from "../../auth/ProvedorCriptografiaBcrypt";
 import RepositorioUsuarioPrisma from "../../db/RepositorioUSuarioPrisma";
 import Terminal from "../util/Terminal";
@@ -14,15 +14,15 @@ export default async function loginUsuario() {
     const crypto = new ProvedorCriptografiaBcrypt();
 
     try {
-        const logar = new LoginUsuario(userRepo, crypto);
+        const facade = new UsuarioFacade(userRepo, crypto);
 
-        const usuario = await logar.executar({
+        const usuario = await facade.login({
             email,
             senha
         })
 
         Terminal.success("Usuário logado com sucesso")
-        Terminal.info(JSON.stringify(usuario.props, null, 2))
+        Terminal.info(JSON.stringify(usuario, null, 2))
     } catch (e) {
         terminal.error(JSON.stringify(e, null, 2))
     } finally {
