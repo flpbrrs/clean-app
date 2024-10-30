@@ -16,7 +16,7 @@ export default class RegistrarUsuarioControler {
 
                 await facade.registrar({ nome, email, senha })
 
-                res.sendStatus(201)
+                res.status(201).json({})
             } catch (e: any) {
                 res.status(400).send(Error.handle(e))
             }

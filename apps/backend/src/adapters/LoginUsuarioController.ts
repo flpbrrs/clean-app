@@ -24,7 +24,7 @@ export default class LoginUsuarioController {
                     isAdmin: usuario.isAdmin
                 })
 
-                res.status(200).send(token)
+                res.status(200).json({ token })
             } catch (e: any) {
                 res.status(400).send(Error.handle(e))
             }
