@@ -1,8 +1,6 @@
-import { UsuarioFacade } from "adapters";
-import ProvedorCriptografiaBcrypt from "../../auth/ProvedorCriptografiaBcrypt";
-import RepositorioUsuarioPrisma from "../../db/RepositorioUSuarioPrisma";
 import Terminal from "../util/Terminal";
 import { terminal } from "terminal-kit";
+import Api from "../../api/Api";
 
 export default async function registrarUsuario() {
     Terminal.titulo("Registar usuário")
@@ -11,18 +9,14 @@ export default async function registrarUsuario() {
     const email = await Terminal.requiredInput('email')
     const senha = await Terminal.requiredInput('senha', { echo: false })
 
-    const userRepo = new RepositorioUsuarioPrisma();
-    const crypto = new ProvedorCriptografiaBcrypt();
+    const api = new Api('http://localhost:3003')
 
     try {
-        const facade = new UsuarioFacade(userRepo, crypto);
-
-        await facade.registrar({
+        await api.post('/usuario/', {
             nome,
             email,
             senha
         })
-
         Terminal.success("Usuário criado com sucesso")
     } catch (e) {
         terminal.error(JSON.stringify(e, null, 2))

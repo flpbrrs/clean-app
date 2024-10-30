@@ -1,8 +1,6 @@
-import { UsuarioFacade } from 'adapters'
-import ProvedorCriptografiaBcrypt from "../../auth/ProvedorCriptografiaBcrypt";
-import RepositorioUsuarioPrisma from "../../db/RepositorioUSuarioPrisma";
 import Terminal from "../util/Terminal";
 import { terminal } from "terminal-kit";
+import Api from '../../api/Api';
 
 export default async function loginUsuario() {
     Terminal.titulo("Login usuário")
@@ -10,19 +8,12 @@ export default async function loginUsuario() {
     const email = await Terminal.requiredInput('email')
     const senha = await Terminal.requiredInput('senha', { echo: false })
 
-    const userRepo = new RepositorioUsuarioPrisma();
-    const crypto = new ProvedorCriptografiaBcrypt();
+    const api = new Api('http://localhost:3003')
 
     try {
-        const facade = new UsuarioFacade(userRepo, crypto);
-
-        const usuario = await facade.login({
-            email,
-            senha
-        })
-
+        const usuario = await api.post<{ token: string }>('/login/', { email, senha })
         Terminal.success("Usuário logado com sucesso")
-        Terminal.info(JSON.stringify(usuario, null, 2))
+        Terminal.info(usuario.token)
     } catch (e) {
         terminal.error(JSON.stringify(e, null, 2))
     } finally {
