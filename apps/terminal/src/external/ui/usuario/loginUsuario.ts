@@ -1,6 +1,7 @@
 import Terminal from "../util/Terminal";
 import { terminal } from "terminal-kit";
 import Api from '../../api/Api';
+import Sessao from "../../data/Sessao";
 
 export default async function loginUsuario() {
     Terminal.titulo("Login usuário")
@@ -14,6 +15,7 @@ export default async function loginUsuario() {
         const usuario = await api.post<{ token: string }>('/login/', { email, senha })
         Terminal.success("Usuário logado com sucesso")
         Terminal.info(usuario.token)
+        Sessao.start(usuario.token)
     } catch (e) {
         terminal.error(JSON.stringify(e, null, 2))
     } finally {
